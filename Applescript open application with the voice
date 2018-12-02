@@ -1,0 +1,27 @@
+tell application "SpeechRecognitionServer"
+	set phrases to {"ouvrir application"}
+	set heard to listen for phrases
+end tell
+
+if (heard = "ouvrir application") then
+	say "quel le nom de l'application ?"
+	tell application "TextEdit"
+		activate
+	end tell
+	delay 1
+	tell application "System Events" to click (menu item "Démarrer Dictée" of menu) of ¬
+		(menu bar item "édition" of menu bar) of (application process "TextEdit")
+	delay 10
+	tell application "TextEdit"
+		activate
+		quit
+	end tell
+	delay 1
+	set theFile to read ("/Users/hernandez/Downloads/Sans titre.rtf") -- choose the location where you use your document
+	set nom to word 4 of paragraph 8 of theFile as text
+	say nom
+	tell application nom
+		activate
+	end tell
+	delay 2
+end if
